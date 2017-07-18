@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <p id="pflichtfelder">
+      <table id="pflicht" style="width:20%">
+        <tr>
+          <th><a>Pflichtfelder</a></th>
+        </tr>
+        <tr>
+          <td><a>Umsatz</a></td>
+          <td><a>1</a></td>
+        </tr>
+        <tr>
+          <td><a>Soll-Haben-Kennzeichen</a></td>
+          <td><a>2</a></td>
+        </tr>
+        <tr>
+          <td><a>Konto</a></td>
+          <td><a>7</a></td>
+        </tr>
+        <tr>
+          <td><a>Gegenkonto</a></td>
+          <td><a>8</a></td>
+        </tr>
+        <tr>
+          <td><a>Belegdatum</a></td>
+          <td><a>10</a></td>
+        </tr>
+      </table>
+    </p>
+    <button class="button" onclick="search()">Anderes</button>
+    <button id="einlesen" onclick="read()" class="button">CSV Datei einlesen</button>
+    <button id="init" onclick="inp()" class="button">Initialisieren</button>
+    <button id="ls" onclick="ls(inp())" class="button">Alle Eintraege auflisten</button>
+    <ol type=1 id="lst" style="width:60%"></ol>
+    <script src="script.js"></script>
+</body>
+</html>
