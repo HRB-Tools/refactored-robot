@@ -131,7 +131,6 @@ function read() {
   rw(bu[0]);
   rw(b);
   console.log(bu);
-  
 }
 /********************************************************************/
 
@@ -183,6 +182,7 @@ function bb(a, b, c) {
 
 }
 function bc(){
+  document.getElementById('buch').style.display = 'block' ;
   var a = prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an");
   var c = prompt("Bitte geben Sie die Anzahl der Buchungen an");
   bb(a, "td", c);
@@ -192,7 +192,7 @@ function bc(){
 /*            Funktionen fuer den Einklappen-Button                 */
 function exp() {
   var elems = document.getElementsByClassName('exp');
-    for (var i=0;i<elems.length;i+=1){
+    for (var i = 0;i < elems.length; i++){
       if ( elems[i].style.display == 'list-item'){
        elems[i].style.display = 'none';
        document.getElementById('exp').innerHTML = "Aufklappen";
@@ -205,11 +205,26 @@ function exp() {
 }
 /********************************************************************/
 
-/*                   Funktionen fuer den Sidebar                    */
+/*            Funktionen fuer den Schliessen-Button                 */
+function cl(){
+  var cc = document.getElementsByClassName('pf');
+    for ( var i = 0; i < cc.length; i++) {
+      cc[i].style.display = 'none';
+    }
+}
+/********************************************************************/
+
+/*                 Funktionen fuer den Sidebar                      */
 function w3_open() {
     document.getElementById("sdb").style.display = "block";
 }
 function w3_close() {
     document.getElementById("sdb").style.display = "none";
 }
+/********************************************************************/
+
+/*               Funktionen fuer den Filter                         */
+/*                 UNDER CONSTRUCTION!!!
+function nthChild
+*/
 /********************************************************************/

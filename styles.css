@@ -61,6 +61,7 @@ tr a:hover {
   background-color: #888888;
   float: right;
   border: none;
+  display: list;
 }
 
 body {
@@ -100,7 +101,7 @@ th, td {
 
 #buch {
   float: left;
-  display: block;
+  display: none;
   border-collapse: collapse;
   border: 2px solid black;
 }
