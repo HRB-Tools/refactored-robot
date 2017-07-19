@@ -13,15 +13,6 @@ var va = [];
 /********************************************************************/
 
 /*       Alle globalen Funktionen kommen hier rein!                 */
-function ls(a) {
-  var items = document.getElementById("lst");
-  items.innerHTML = "";
-  for (var i = 0; i < a.length; i++){
-    var output = document.createElement("li");
-    output.innerHTML = a[i];
-    items.appendChild(output);
-  }
-}
 function writeOutput(a,b) {
   var items = document.getElementById(b);
   items.innerHTML = "";
@@ -75,19 +66,41 @@ function ins(a, b) {
       b[i] = a.slice(st+(i*la),st+(i+1)*la);
   }
 }
-function sc(a, b) {
-  for ( var i = 0; i < b.length; i++){
+function sc(a, b, c) {
+  //console.log("a = " + a + " , c = " + c);
+  for ( var i = c; i < b.length; i++) {
     if ( a == b[i]){
       return i;
     }
+    else {
+      var y = b[i].split(" ");
+        for (var p = 0; p < y.length; p++) {
+          if ( a == y[p] ){
+            sc(a, b, i+1);
+            return i;
+          }
+        }
+    }
+    if ( i == b.length) {
+      break;
+    }
   }
 }
+/********************************************************************/
+    
+    
+    
+/*         Funktion fuer den Initialisieren-Button                  */
 function inp() {
+  if ( va.length === 0 ) { 
   var bd = prompt(`Bitte lesen Sie die Musterdaten ein`);
+  if ( bd === undefined) {
+    return 0;
+  }
   va = bd.split(";");
   var le = [];
   for (var i = 0; i <= va.length; i++) {
-    if (va[i] == '"S"' || va[i] == '"H"'){
+    if (va[i] == '"S"' || va[i] == '"H"') {
       le[j] = i;
       j++;
     }
@@ -101,7 +114,12 @@ function inp() {
   var vb = va.slice(30,le[0]);
   j = 0;
   console.log(vb);
+  va = vb;
   return vb;
+  }
+  else {
+    return va; 
+  }
 }
 /********************************************************************/
 
@@ -123,8 +141,39 @@ function read() {
 function search() {
   var f = prompt("Bitte geben Sie einen oder mehrere Suchbegriffe ein");
   var se = f.split(",");
-  for ( var i = 0; i <= se.length; i++){
-    console.log(sc(se[i], va));
+  for ( var i = 0; i < se.length; i++){
+    console.log((sc(se[i], va, 0))+1);
   }
+}
+/********************************************************************/
+
+
+/*                Funktionen fuer den Listen-Button                 */
+function ls(a) {
+  var items = document.getElementById("lst");
+  items.innerHTML = "";
+  for (var i = 0; i < a.length; i++){
+    var output = document.createElement("li");
+    output.setAttribute( 'class', 'exp');
+    output.innerHTML = a[i];
+    items.appendChild(output);
+    document.getElementById('exp').style.display = "block";
+  }
+}
+/********************************************************************/
+
+/*            Funktionen fuer den Einklappen-Button                 */
+function exp() {
+  var elems = document.getElementsByClassName('exp');
+    for (var i=0;i<elems.length;i+=1){
+      if ( elems[i].style.display == 'list-item'){
+       elems[i].style.display = 'none';
+       document.getElementById('exp').innerHTML = "Aufklappen";
+      }
+      else {
+        elems[i].style.display = 'list-item';
+        document.getElementById('exp').innerHTML = "Einklappen";
+      }
+    } 
 }
 /********************************************************************/

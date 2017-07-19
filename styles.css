@@ -49,10 +49,20 @@ body {
 #lst {
   background-color: #666666;
   text-align: left;
+  padding: 0px 32px;
+  max-width: 280px;
 }
 
 li {
   color: #999999;
   text-align: right;
   
+}
+
+.exp { 
+  display: list-item;
+}
+
+#exp {
+  display: none;
 }
