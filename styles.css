@@ -2,14 +2,29 @@
   background-color: #888888;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 12px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 20px;
-  margin: 0px 2px;
+  margin: 0px 0px;
   cursor: pointer;
+  float: left;
+  height: 55px;
+  width: 100px;
+  -webkit-transition: width 2s;
+  transition: width 2s;
 }
+
+
+#sdb {
+  background-color: #b0b0b0;
+}
+
+li.w3-button {
+  color: #f0f0f0;
+}
+
 
 ul {
   text-align: left;
@@ -24,6 +39,9 @@ h1 {
   font-family: Arial;
 }
 
+th a {
+  border: none;
+}
 
 tr a {
   display: block;
@@ -32,6 +50,7 @@ tr a {
   padding: 16px;
   text-decoration: none;
   font-family: Arial;
+  border: none;
 }
 
 tr a:hover {
@@ -40,6 +59,8 @@ tr a:hover {
 
 #pflicht {
   background-color: #888888;
+  float: right;
+  border: none;
 }
 
 body {
@@ -49,13 +70,18 @@ body {
 #lst {
   background-color: #666666;
   text-align: left;
-  padding: 0px 32px;
-  max-width: 280px;
+  padding: 0px 30px;
+  max-width: 340px;
+}
+
+ol {
+  float: left;
+  list-style-position: inside;
 }
 
 li {
   color: #999999;
-  text-align: right;
+  text-align: left;
   
 }
 
@@ -66,3 +92,33 @@ li {
 #exp {
   display: none;
 }
+
+th, td {
+  border: 1px solid black;
+  min-width: 75px;
+}
+
+#buch {
+  float: left;
+  display: block;
+  border-collapse: collapse;
+  border: 2px solid black;
+}
+
+#div1 {
+  border: 0px black;
+}
+
+#cont {
+  background-color: #999999;
+}
+
+body {
+  background-color: #999999;
+  margin-left: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: block;
+}
+

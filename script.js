@@ -88,8 +88,6 @@ function sc(a, b, c) {
 }
 /********************************************************************/
     
-    
-    
 /*         Funktion fuer den Initialisieren-Button                  */
 function inp() {
   if ( va.length === 0 ) { 
@@ -147,7 +145,6 @@ function search() {
 }
 /********************************************************************/
 
-
 /*                Funktionen fuer den Listen-Button                 */
 function ls(a) {
   var items = document.getElementById("lst");
@@ -159,6 +156,36 @@ function ls(a) {
     items.appendChild(output);
     document.getElementById('exp').style.display = "block";
   }
+}
+/********************************************************************/
+
+/*                  Funktionen fuer den Anzeigen-Button             */
+function bb(a, b, c) {
+ var buch = document.getElementById("buch");
+ buch.innerHTML = "";
+ for ( var l = 0; l < c; l++){
+   var ll = document.createElement("tr");
+   buch.appendChild(ll);
+    if ( l === 0 ){
+      for ( var m = 0; m < va.length; m++){
+        var oo = document.createElement("th");
+        oo.innerHTML = va[m];
+        buch.appendChild(oo);
+      }
+    }
+    buch.appendChild(ll);
+    for ( var i = 0; i < bu[l].length; i++) {
+      var op = document.createElement(b);
+      op.innerHTML = bu[l][i].replace('""', ' ');
+      buch.appendChild(op);
+      }
+ }
+
+}
+function bc(){
+  var a = prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an");
+  var c = prompt("Bitte geben Sie die Anzahl der Buchungen an");
+  bb(a, "td", c);
 }
 /********************************************************************/
 
@@ -175,5 +202,14 @@ function exp() {
         document.getElementById('exp').innerHTML = "Einklappen";
       }
     } 
+}
+/********************************************************************/
+
+/*                   Funktionen fuer den Sidebar                    */
+function w3_open() {
+    document.getElementById("sdb").style.display = "block";
+}
+function w3_close() {
+    document.getElementById("sdb").style.display = "none";
 }
 /********************************************************************/
