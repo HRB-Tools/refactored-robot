@@ -9,7 +9,7 @@ var b = [];
 var ind = [];
 var st = 0;
 var la = -1;
-var va = [];
+var entries = [];
 /********************************************************************/
 
 /*       Alle globalen Funktionen kommen hier rein!                 */
@@ -29,7 +29,7 @@ function searchWhiteSpaces(a, i){
   }
 }
 function rw(ar) {
-  for ( var i = 0; i < ar.length; i++) {
+  for ( var i = 0; i < ar.length - 1; i++) {
     searchWhiteSpaces(ar, i);
   }
 }
@@ -86,51 +86,54 @@ function sc(a, b, c) {
     }
   }
 }
+function extractNumber(a){
+    for ( var i = 0; i < a.length; i++ ) {
+        var ccc = a.charAt(i);
+        if ( isNaN(ccc) && ccc!==",") {
+            a = a.replace(a.charAt(i), " ");
+        }
+    }
+    return a;
+}
 /********************************************************************/
     
-/*         Funktion fuer den Initialisieren-Button                  */
-function inp() {
-  if ( va.length === 0 ) { 
-  var bd = prompt(`Bitte lesen Sie die Musterdaten ein`);
-  if ( bd === undefined) {
-    return 0;
-  }
-  va = bd.split(";");
+/*   Funktion fuer den Initialisieren-Button +++ NICHT MEHR!!! +++  */
+function input(a) {
+  entries = a;
   var le = [];
-  for (var i = 0; i <= va.length; i++) {
-    if (va[i] == '"S"' || va[i] == '"H"') {
+  for (var i = 0; i <= entries.length; i++) {
+    if (entries[i] === '"S"' || entries[i] === '"H"') {
       le[j] = i;
       j++;
     }
   }
-  console.log(va[le[0]-1]);
-  var m1 = va[le[0]-1].split(" ");
+  var m1 = entries[le[0]-1].split(" ");
   m1.splice(-1, 1);
   var m2 = m1.join();
   m1 = m2.replace(",", " ");
-  va[le[0]-1] = m1;
-  var vb = va.slice(30,le[0]);
+  entries[le[0]-1] = m1;
+  var vb = entries.slice(30,le[0]);
   j = 0;
-  console.log(vb);
-  va = vb;
+  entries = vb;
+  entries[115] = "Datum Zuord. Steuerperiode";
   return vb;
-  }
-  else {
-    return va; 
-  }
 }
 /********************************************************************/
 
 /*               Funktionen fuer den Einlesen-Button                */
 function read() {
   var inp = prompt(`Bitte geben Sie einen Text ein`);
+  if (inp === undefined ) {
+      return 0;
+  }
   el = inp.split(";");
+  entries = (input(el));
   sh(el);
   rec(ind[0], ind[1]);
   ins(el, bu);
-  rw(bu[0]);
   rw(b);
-  console.log(bu);
+  bu[0][0] = extractNumber(bu[0][0]);
+  return bu;
 }
 /********************************************************************/
 
@@ -139,7 +142,7 @@ function search() {
   var f = prompt("Bitte geben Sie einen oder mehrere Suchbegriffe ein");
   var se = f.split(",");
   for ( var i = 0; i < se.length; i++){
-    console.log((sc(se[i], va, 0))+1);
+    console.log((sc(se[i], entries, 0))+1);
   }
 }
 /********************************************************************/
@@ -162,13 +165,13 @@ function ls(a) {
 function bb(a, b, c) {
  var buch = document.getElementById("buch");
  buch.innerHTML = "";
- for ( var l = 0; l < c; l++){
+ for ( var l = a-1; l < (a-1+c); l++){
    var ll = document.createElement("tr");
    buch.appendChild(ll);
-    if ( l === 0 ){
-      for ( var m = 0; m < va.length; m++){
+    if ( l === a-1 ){
+      for ( var m = 0; m < entries.length; m++){
         var oo = document.createElement("th");
-        oo.innerHTML = va[m];
+        oo.innerHTML = entries[m];
         buch.appendChild(oo);
       }
     }
@@ -183,8 +186,8 @@ function bb(a, b, c) {
 }
 function bc(){
   document.getElementById('buch').style.display = 'block' ;
-  var a = prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an");
-  var c = prompt("Bitte geben Sie die Anzahl der Buchungen an");
+  var a = prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an", 1);
+  var c = prompt("Bitte geben Sie die Anzahl der Buchungen an", j);
   bb(a, "td", c);
 }
 /********************************************************************/

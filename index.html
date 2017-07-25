@@ -10,8 +10,7 @@
       <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
       <li id="search" onmousedown="search()" class="w3-bar-item w3-button">Anderes</li>
       <li id="einlesen" onmousedown="read()" class="w3-bar-item w3-button">CSV Datei einlesen</li>
-      <li id="init" onmousedown="inp()" class="w3-bar-item w3-button">Initialisieren</li>
-      <li id="ls" onmousedown="ls(inp())" class="w3-bar-item w3-button">Felder anzeigen</li>
+      <li id="ls" onmousedown="ls(input())" class="w3-bar-item w3-button">Felder anzeigen</li>
       <li id="exp" onmousedown="exp()" class="w3-bar-item w3-button">Einklappen</li>
       <li id="anz" onmousedown="bc()" class="w3-bar-item w3-button">Buchung anzeigen</li>
 </div>
@@ -52,7 +51,7 @@
       </table>
     </p>
     <ol type=1 id="lst" style="width:70%"></ol>
-    <div id="div1" style="overflow-x:auto;"><table id="buch" ></table></div> 
+    <div id="div1" style="overflow:auto;width:100%;"><table id="buch" ></table></div>
     <script src="script.js"></script>
   </div>
 </div>  
