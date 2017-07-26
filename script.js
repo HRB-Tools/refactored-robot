@@ -10,6 +10,7 @@ var ind = [];
 var st = 0;
 var la = -1;
 var entries = [];
+var bcd = ["nach Zeile", "nach Spalte", "nur Soll", "nur Haben", "Zeileneintrag entspricht" ];
 /********************************************************************/
 
 /*       Alle globalen Funktionen kommen hier rein!                 */
@@ -95,6 +96,9 @@ function extractNumber(a){
     }
     return a;
 }
+function addN(a, n = 0){
+  a += n;
+}
 /********************************************************************/
     
 /*   Funktion fuer den Initialisieren-Button +++ NICHT MEHR!!! +++  */
@@ -111,7 +115,9 @@ function input(a) {
   m1.splice(-1, 1);
   var m2 = m1.join();
   m1 = m2.replace(",", " ");
+  m2 = a[145];
   entries[le[0]-1] = m1;
+  a[145]=m2;
   var vb = entries.slice(30,le[0]);
   j = 0;
   entries = vb;
@@ -132,7 +138,9 @@ function read() {
   rec(ind[0], ind[1]);
   ins(el, bu);
   rw(b);
-  bu[0][0] = extractNumber(bu[0][0]);
+  bu[0][0] = b[0];
+  document.getElementById("btn1").style.display = "block";
+  document.getElementById("btn2").style.display = "block";
   return bu;
 }
 /********************************************************************/
@@ -148,8 +156,8 @@ function search() {
 /********************************************************************/
 
 /*                Funktionen fuer den Listen-Button                 */
-function ls(a) {
-  var items = document.getElementById("lst");
+function ls(a, b) {
+  var items = document.getElementById(b);
   items.innerHTML = "";
   for (var i = 0; i < a.length; i++){
     var output = document.createElement("li");
@@ -165,15 +173,11 @@ function ls(a) {
 function bb(a, b, c) {
  var buch = document.getElementById("buch");
  buch.innerHTML = "";
- for ( var l = a-1; l < (a-1+c); l++){
+ for ( var l = a-1; l < (a-1+c) ; l++){
    var ll = document.createElement("tr");
    buch.appendChild(ll);
     if ( l === a-1 ){
-      for ( var m = 0; m < entries.length; m++){
-        var oo = document.createElement("th");
-        oo.innerHTML = entries[m];
-        buch.appendChild(oo);
-      }
+      bd();
     }
     buch.appendChild(ll);
     for ( var i = 0; i < bu[l].length; i++) {
@@ -186,9 +190,16 @@ function bb(a, b, c) {
 }
 function bc(){
   document.getElementById('buch').style.display = 'block' ;
-  var a = prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an", 1);
-  var c = prompt("Bitte geben Sie die Anzahl der Buchungen an", j);
+  var a = parseInt(prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an", 1));
+  var c = parseInt(prompt("Bitte geben Sie die Anzahl der Buchungen an", j));
   bb(a, "td", c);
+}
+function bd(){
+  for ( var m = 0; m < entries.length; m++){
+        var oo = document.createElement("th");
+        oo.innerHTML = entries[m];
+        buch.appendChild(oo);
+    }
 }
 /********************************************************************/
 
@@ -209,8 +220,8 @@ function exp() {
 /********************************************************************/
 
 /*            Funktionen fuer den Schliessen-Button                 */
-function cl(){
-  var cc = document.getElementsByClassName('pf');
+function cl(a){
+  var cc = document.getElementsByClassName('pf' + a);
     for ( var i = 0; i < cc.length; i++) {
       cc[i].style.display = 'none';
     }
@@ -227,7 +238,135 @@ function w3_close() {
 /********************************************************************/
 
 /*               Funktionen fuer den Filter                         */
-/*                 UNDER CONSTRUCTION!!!
-function nthChild
-*/
+function filter(){
+  var kj = document.getElementById("div2");
+  kj.innerHTML = "";
+  kj.style.display='block';
+  var oy = document.createElement("li");
+  oy.setAttribute('onclick', 'cl(2)');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = 'Schliessen';
+  kj.appendChild(oy);
+  oy = document.createElement("li");
+  oy.setAttribute('onclick', 'zeile()');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = bcd[0];
+  kj.appendChild(oy);
+  oy = document.createElement("li");
+  oy.setAttribute('onclick', 'spalte()');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = bcd[1];
+  kj.appendChild(oy);
+  oy = document.createElement("li");
+  oy.setAttribute('onclick', 'soll(true)');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = bcd[2];
+  kj.appendChild(oy);
+  oy = document.createElement("li");
+  oy.setAttribute('onclick', 'soll(false)');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = bcd[3];
+  kj.appendChild(oy);
+  oy = document.createElement("li");
+  oy.setAttribute('onclick', 'matchEntry()');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = bcd[4];
+  kj.appendChild(oy);
+}
+function zeile(){
+  var a = prompt("Bitte geben Sie die anzuzeigende Zeile an");
+  bb(a, "td", 1);
+}
+function spalte(){
+  var a = parseInt(prompt("Bitte geben Sie die anzuzeigende Spalte an"))-1;
+  var buch = document.getElementById("buch");
+  buch.innerHTML = "";
+  for (var i = 0; i <= j+1; i++ ){
+    var ll = document.createElement("tr");
+    buch.appendChild(ll);
+      if ( i === 0) {
+        var oo = document.createElement("th");
+        oo.innerHTML=entries[a];
+        buch.appendChild(oo);
+      }
+      buch.appendChild(ll);
+      var op = document.createElement("td");
+      op.innerHTML = bu[i][a].replace('""', ' ');
+      buch.appendChild(op);
+  }
+}
+function soll(a = true){
+  var buch = document.getElementById("buch");
+  buch.innerHTML = "";
+  for ( var l = 0; l <= j; l++){
+    var ll = document.createElement("tr");
+    buch.appendChild(ll);
+    if ( l === 0) {
+      for ( var m = 0; m < entries.length; m++){
+        var oo = document.createElement("th");
+        oo.innerHTML = entries[m];
+        buch.appendChild(oo);
+      }
+    }
+    buch.appendChild(ll);
+    for (var i = 0; i < bu[0].length; i++){
+      var op = document.createElement("td");
+      if ( (bu[l][1] === '"S"') === a){
+        op.innerHTML = bu[l][i].replace('""', ' ');
+        buch.appendChild(op);
+      }
+    }
+  }
+}
+function matchEntry(){
+  var a = prompt("Bitte geben Sie ein Suchwort ein:");
+  var b = [];
+  var c = 0;
+  for ( var i = 0; i < j; i++){
+    for (var k = 0; k < bu[i].length; k++){
+      if ( bu[i][k] == a){
+        b[c] = i;
+        c++;
+      }
+    }
+  }
+  var buch = document.getElementById("buch");
+  buch.innerHTML = "";
+  for ( var l = 0; l <= b.length; l++){
+    var ll = document.createElement("tr");
+    if (l === 0){
+      bd();
+    }
+    buch.appendChild(ll);
+    var h = b[l];
+      for (var n = 0; n < parseInt(bu[h].length); n++){
+      var op = document.createElement("td");
+      op.innerHTML = bu[b[l]][n].replace('""', ' ');
+      buch.appendChild(op);
+      }
+  }
+ 
+  console.log(b);
+}
 /********************************************************************/
+
+/*       Finale Funktion fuer die Ausgabe als CSV                   */
+/*function output(){
+  var a = document.getElementById("text-box");
+  for( var i = 0; i < j ;i++){
+    var b = document.getElementById("text-box").innerHTML + bu[i] + '<br />';
+  }
+document.getElementById("btn2").disabled = false;
+}*/
+function leeren(){
+  document.getElementById("text-box").innerHTML=' ';
+  document.getElementById("btn2").disabled = true;
+}
+
+/********************************************************************/
+
+
+
+
+
+

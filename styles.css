@@ -1,35 +1,17 @@
-.button {
-  background-color: #888888;
-  border: none;
-  color: white;
-  padding: 12px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  margin: 0px 0px;
-  cursor: pointer;
-  float: left;
-  height: 55px;
-  width: 100px;
-  -webkit-transition: width 2s;
-  transition: width 2s;
+/* Element-Regeln */
+body {
+  background-color: #999999;
+  margin-left: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: block;
 }
-
-
-#sdb {
-  background-color: #b0b0b0;
-}
-
-li.w3-button {
-  color: #f0f0f0;
-}
-
-
 ul {
   text-align: left;
   color: black;
   font-size: 20px;
+  list-style: none;
 }
 
 h1 {
@@ -52,29 +34,9 @@ tr a {
   font-family: Arial;
   border: none;
 }
-
 tr a:hover {
   background-color: #444444;
 }
-
-#pflicht {
-  background-color: #888888;
-  float: right;
-  border: none;
-  display: list;
-}
-
-body {
-  background-color: #777777;
-}
-
-#lst {
-  background-color: #666666;
-  text-align: left;
-  padding: 0px 30px;
-  max-width: 340px;
-}
-
 ol {
   float: left;
   list-style-position: inside;
@@ -83,22 +45,75 @@ ol {
 li {
   color: #999999;
   text-align: left;
+  }
+th, td {
+  border: 1px solid black;
+  min-width: 75px;
+  min-height: 20px;
+}  
   
+  
+/* Klassenregeln */
+div.fixed {
+  position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 300px;
+    border: 1px solid #737373;
 }
 
 .exp { 
   display: list-item;
+  position: fixed;
+}
+.button {
+  background-color: #888888;
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 0px 0px;
+  cursor: pointer;
+  float: left;
+  height: 55px;
+  width: 100px;
+  -webkit-transition: width 2s;
+  transition: width 2s;
+}
+li.w3-button {
+  color: #f0f0f0;
+}
+li.pf2 {
+  margin: 1px;
+  color: #dddddd;
+  background-color: #888888;
+  padding: 0px 0px;
+  display: inline-block;
+  width: 150px;
+  cursor: pointer;
+  text-align: center;
+  
 }
 
+/* Id-Regeln */
+ul#div2 {
+  display: none;
+  border: 2px solid black;
+  max-width: 157px;
+  padding: 0px 0px;
+}
+#lst, #div2 {
+  background-color: #777777;
+  text-align: left;
+  padding: 0px 30px;
+  max-width: 340px;
+}
 #exp {
   display: none;
 }
-
-th, td {
-  border: 1px solid black;
-  min-width: 75px;
-}
-
 #buch {
   float: left;
   display: none;
@@ -109,17 +124,21 @@ th, td {
 #div1 {
   border: 0px black;
 }
-
 #cont {
   background-color: #999999;
 }
-
-body {
-  background-color: #999999;
-  margin-left: 8px;
-  margin-top: 8px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  display: block;
+#sdb {
+  background-color: #b0b0b0;
 }
+#pflicht {
+  background-color: #888888;
+  float: right;
+  border: none;
+  display: none;
+}
+
+
+
+
+
 
