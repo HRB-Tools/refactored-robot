@@ -1,11 +1,12 @@
 /* Element-Regeln */
 body {
-  background-color: #999999;
+  background-color: #FAF7F5;
   margin-left: 8px;
   margin-top: 8px;
   margin-right: 8px;
   margin-bottom: 8px;
   display: block;
+  color: #332F26;
 }
 ul {
   text-align: left;
@@ -98,6 +99,7 @@ li.pf2 {
   
 }
 
+
 /* Id-Regeln */
 ul#div2 {
   display: none;
@@ -118,14 +120,16 @@ ul#div2 {
   float: left;
   display: none;
   border-collapse: collapse;
-  border: 2px solid black;
+  border: 2px;
+  border-color: #d3d3d3;
+  color: #704422;
 }
 
 #div1 {
   border: 0px black;
 }
 #cont {
-  background-color: #999999;
+  background-color: #FAF7F5;
 }
 #sdb {
   background-color: #b0b0b0;

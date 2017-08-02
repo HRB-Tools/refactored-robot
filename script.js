@@ -5,12 +5,16 @@
 var el = [];
 var j = 0;
 var bu = [];
+var inp; 
 var b = [];
 var ind = [];
 var st = 0;
 var la = -1;
 var entries = [];
-var bcd = ["nach Zeile", "nach Spalte", "nur Soll", "nur Haben", "Zeileneintrag entspricht" ];
+var inp2 = '';
+var bcd = ["nach Zeile", "nach Spalte", "nur Soll", "nur Haben", "Zeileneintrag entspricht", "Ersetzen" ];
+var lightequip_k = [1140, 1184, 1186, 1200, 1402, 1403, 1404, 1406, 3300, 3801, 3802, 3803, 3804, 3806, 3808,
+4100, 4315, 4400, 4736, 5200, 5300, 5400, 5425, 5736, 5880, 6760];
 /********************************************************************/
 
 /*       Alle globalen Funktionen kommen hier rein!                 */
@@ -127,20 +131,23 @@ function input(a) {
 /********************************************************************/
 
 /*               Funktionen fuer den Einlesen-Button                */
-function read() {
-  var inp = prompt(`Bitte geben Sie einen Text ein`);
-  if (inp === undefined ) {
+function read(a = 'empty') {
+  j = 0;
+  console.log(a);
+  inp = ( a === 'empty' ? prompt(`Bitte geben Sie einen Text ein`) : a);
+  if (a === undefined ) {
       return 0;
   }
   el = inp.split(";");
   entries = (input(el));
   sh(el);
   rec(ind[0], ind[1]);
-  ins(el, bu);
+  ins(el, bu);    //Beträge herausziehne
   rw(b);
   bu[0][0] = b[0];
   document.getElementById("btn1").style.display = "block";
   document.getElementById("btn2").style.display = "block";
+  document.getElementById("btn3").style.display = "block";
   return bu;
 }
 /********************************************************************/
@@ -176,11 +183,12 @@ function bb(a, b, c) {
  for ( var l = a-1; l < (a-1+c) ; l++){
    var ll = document.createElement("tr");
    buch.appendChild(ll);
+   var bl = bu[l].length;
     if ( l === a-1 ){
       bd();
     }
     buch.appendChild(ll);
-    for ( var i = 0; i < bu[l].length; i++) {
+    for ( var i = 0; i < bl; i++) {
       var op = document.createElement(b);
       op.innerHTML = bu[l][i].replace('""', ' ');
       buch.appendChild(op);
@@ -272,14 +280,21 @@ function filter(){
   oy.setAttribute('class', 'pf2');
   oy.innerHTML = bcd[4];
   kj.appendChild(oy);
+  oy = document.createElement("li");
+  oy.setAttribute('onclick', 'ersetzen()');
+  oy.setAttribute('class', 'pf2');
+  oy.innerHTML = bcd[5];
+  kj.appendChild(oy);
 }
 function zeile(){
+  document.getElementById("buch").style.display = 'block';
   var a = prompt("Bitte geben Sie die anzuzeigende Zeile an");
   bb(a, "td", 1);
 }
 function spalte(){
   var a = parseInt(prompt("Bitte geben Sie die anzuzeigende Spalte an"))-1;
   var buch = document.getElementById("buch");
+  buch.style.display = 'block';
   buch.innerHTML = "";
   for (var i = 0; i <= j+1; i++ ){
     var ll = document.createElement("tr");
@@ -297,6 +312,7 @@ function spalte(){
 }
 function soll(a = true){
   var buch = document.getElementById("buch");
+  buch.style.display = 'block';
   buch.innerHTML = "";
   for ( var l = 0; l <= j; l++){
     var ll = document.createElement("tr");
@@ -308,10 +324,10 @@ function soll(a = true){
         buch.appendChild(oo);
       }
     }
-    buch.appendChild(ll);
+    buch.appendChild(ll);                                         //hierhin setzen
     for (var i = 0; i < bu[0].length; i++){
       var op = document.createElement("td");
-      if ( (bu[l][1] === '"S"') === a){
+      if ( (bu[l][1] == '"S"') === a){                            //if-Abfrage am besten
         op.innerHTML = bu[l][i].replace('""', ' ');
         buch.appendChild(op);
       }
@@ -319,6 +335,7 @@ function soll(a = true){
   }
 }
 function matchEntry(){
+  document.getElementById("buch").style.display = 'block';
   var a = prompt("Bitte geben Sie ein Suchwort ein:");
   var b = [];
   var c = 0;
@@ -348,20 +365,70 @@ function matchEntry(){
  
   console.log(b);
 }
+function ersetzen(){
+  var a = prompt("Bitte geben Sie den zu ersetzenden Begriff ein:");
+  if ( a === null ){
+    return 0;
+  }
+  var b = [];
+  var c = 0;
+  var d = [];
+  var e = 0;
+  for ( var i = 0; i < j; i++){
+    for (var k = 0; k < bu[i].length; k++){
+      if ( bu[i][k] == a){
+        b[c] = i;
+        if ( d.indexOf(k) < 0 ) {
+          d[e]=k;
+          e++;
+        }
+        c++;
+      }
+    }
+  }
+  console.log(a, b, c);
+  console.log('Treffer gefunden in folgenden Spalten: ' + d);
+  for ( var m = 0; m < d.length; m++) { d[m]+=1; }
+  var nVal = confirm("Auszuwaehlende Spalten:" + d);
+  var nEntry = prompt("Neuer zuzuweisender Wert: ");
+  var replace = a;
+  var re = new RegExp(replace, "g");
+  inp2 = inp.replace(re, nEntry);
+  read(inp2);
+  bc();
+}
 /********************************************************************/
 
 /*       Finale Funktion fuer die Ausgabe als CSV                   */
-/*function output(){
-  var a = document.getElementById("text-box");
-  for( var i = 0; i < j ;i++){
-    var b = document.getElementById("text-box").innerHTML + bu[i] + '<br />';
-  }
-document.getElementById("btn2").disabled = false;
-}*/
+function output(a){
+   //document.getElementById("text-box").innerHTML= bu.toString();
+   document.getElementById("text-box").innerHTML = (inp2 === '' ? inp : inp2);
+}
+
 function leeren(){
   document.getElementById("text-box").innerHTML=' ';
   document.getElementById("btn2").disabled = true;
 }
+
+var cpbtn = document.querySelector('.js-button');
+cpbtn.addEventListener('click', function(event){
+  var txt = document.querySelector('.js-input-field');
+  var range = document.createRange();
+  range.selectNode(txt);
+  var selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+  }
+  catch(err) {
+    console.log('unable to copy');
+  }
+  window.getSelection().removeAllRanges();
+});
+
 
 /********************************************************************/
 
