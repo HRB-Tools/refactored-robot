@@ -5,6 +5,7 @@
 var el = [];
 var j = 0;
 var bu = [];
+var bn = [];
 var inp; 
 var b = [];
 var ind = [];
@@ -139,15 +140,20 @@ function read(a = 'empty') {
       return 0;
   }
   el = inp.split(";");
+  //console.log("Eingabe, bu = " + bu[0][0]);
   entries = (input(el));
-  sh(el);
-  rec(ind[0], ind[1]);
+  //console.log("Eintraege, bu= " + bu[0][0]);
+  sh(el);               //sollHaben
+  //console.log("Soll-Haben bu = " + bu[0][0]);
+  rec(ind[0], ind[1]); //Typ erkennen
+  //console.log("Typ erkannt, bu = " + bu[0][0]);
   ins(el, bu);    //Beträge herausziehne
-  rw(b);
+  rw(b);          //Leerzeichen entfernen
   bu[0][0] = b[0];
   document.getElementById("btn1").style.display = "block";
   document.getElementById("btn2").style.display = "block";
   document.getElementById("btn3").style.display = "block";
+  document.getElementById("btn4").style.display = "block";
   return bu;
 }
 /********************************************************************/
@@ -395,6 +401,7 @@ function ersetzen(){
   var re = new RegExp(replace, "g");
   inp2 = inp.replace(re, nEntry);
   read(inp2);
+  exportToCsv('datev_neu.csv', bu);
   bc();
 }
 /********************************************************************/
@@ -429,10 +436,53 @@ cpbtn.addEventListener('click', function(event){
   window.getSelection().removeAllRanges();
 });
 
+function exportToCsv(filename, rows) {
+        var processRow = function (row) {
+            var finalVal = '';
+            for (var j = 0; j < row.length; j++) {
+                var innerValue = row[j] === null ? '' : row[j].toString();
+                if (row[j] instanceof Date) {
+                    innerValue = row[j].toLocaleString();
+                }
+                var result = innerValue.replace(/"/g, '"');
+                /*if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';*/  //keine unnötigen Anführungszeichen
+                if (j > 0)
+                    finalVal += ';';
+                finalVal += result;
+            }
+            return finalVal + '\n';
+        };
+
+        var csvFile = '';
+        for (var i = 0; i < rows.length; i++) {
+            csvFile += processRow(rows[i]);
+        }
+
+        var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+      }
+}
 
 /********************************************************************/
-
-
+/************ Experimentelle Funktionen (wenn etwas kaputtgeht dann hier!!) ************/ 
+var buNeu = [];
+buNeu = bu.slice();
+    
+    
 
 
 
