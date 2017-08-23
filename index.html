@@ -3,71 +3,47 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" href="w3.css">
+  <title>Advanced CSV Editor - Test Environment</title>
 </head>
 
-<div id="sdb" class="w3-sidebar w3-bar-block w3-border-right" style="display:none">
-      <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
-      <li id="search" onmousedown="search();w3_close()" class="w3-bar-item w3-button">Anderes</li>
-      <li id="einlesen" onmousedown="read();w3_close()" class="w3-bar-item w3-button">CSV Datei einlesen</li>
-      <li id="ls" onmousedown="ls(entries, 'lst');w3_close()" class="w3-bar-item w3-button">Felder anzeigen</li>
-      <li id="exp" onmousedown="exp();w3_close()" class="w3-bar-item w3-button">Einklappen</li>
-      <li id="anz" onmousedown="bc();w3_close()" class="w3-bar-item w3-button">Buchung anzeigen</li>
-      <li id="fil" onmousedown="filter();w3_close()" class="w3-bar-item w3-button">Filter</li>
+<div id="sidebar" class="sidebar bar-block border-right">
+      <button id="closebtn" onclick="hide('sidebar')" class="bar-item large">Close &times;</button>
+      <a id="einlesen" onmousedown="read();hide('sidebar')" class="bar-item button">CSV Datei einlesen</a>
+      <a id="anz" onmousedown="bc();hide('sidebar')" class="bar-item button">Buchung anzeigen</a>
+      <a id="fil" onmousedown="filter();hide('sidebar')" class="bar-item button">Filter</a>
+      <a id="rule" onmousedown="chooseRule();hide('sidebar')" class="bar-item button">Regeln ausw&aumlhlen</a>
+      <a href="readme.html" class="bar-item button">Volle Dokumentation</a>
+      <a href="translation_tables.html" class="bar-item button">Translation Tables</a>
 </div>
 
 
 
 
 <body>
-  <div class="w3-teal">
-    <a href="#bottom">Nach unten navigieren</a>
-    <a name="top"></a>
-  <button class="w3-button w3-teal w3-xlarge" onmouseover="w3_open()">+</button>
-  <div id="cont" style="width:100%" class="w3-container">
-    <p id="pflichtfelder">
-      <table id="pflicht" style="width:20%">
-        <tr class="pf1">
-          <th><a>Pflichtfelder</a></th>
-          <th><a id="cls" onmousedown="cl(1)">X</a></th>
-        </tr>
-        <tr class="pf1">
-          <td><a>Umsatz</a></td>
-          <td><a>1</a></td>
-        </tr>
-        <tr class="pf1">
-          <td><a>Soll-Haben-Kennzeichen</a></td>
-          <td><a>2</a></td>
-        </tr>
-        <tr class="pf1">
-          <td><a>Konto</a></td>
-          <td><a>7</a></td>
-        </tr>
-        <tr class="pf1">
-          <td><a>Gegenkonto</a></td>
-          <td><a>8</a></td>
-        </tr>
-        <tr class="pf1">
-          <td><a>Belegdatum</a></td>
-          <td><a>10</a></td>
-        </tr>
-      </table>
-    </p>
-    <ol type=1 id="lst" style="width:70%"></ol>
-    <div id="div1" style="overflow:auto;width:100%;"><table id="buch" ></table></div>
-    <div><ul id="div2" class="pf2">
-    </ul></div>
-    <div>
-      <ul style="display: inline">
-        <li><button id="btn1" onclick="output()" style="display: none">Ausgeben</button></li>
-        <li><button id="btn2" onclick="leeren()" style="display: none" disabled>Leeren</button></li>
-      </ul>
-      <div id="text-box" style="background-color: black;overflow: auto"></div>
-    </div>
-    <a name="bottom"></a>
-    <div class="fixed"><a href="#top">Nach oben navigieren</a></div>
-    <script src="script.js"></script>
+  <a name="top"></a>
+  <div id="top-bar">
+  <button id="plus" class="button xlarge" onmouseover="show('sidebar')">&equiv;</button>
   </div>
-</div>  
+  <div id="cont" class="container"> 
+  </div>
+    <div id="div1"><table id="buch"></table></div>
+    <div class="fixed"><a href="#top">&Lambda;</a></div>
+  </div>
+  <div id="ausgabe">
+      <ul>
+        <li><button class="btns" id="btn1" onclick="output(bu)" class="button">Ausgeben</button></li>
+        <li><button class="btns" id="btn2" onclick="leeren()" class="button">Leeren</button></li>
+        <li><button class="btns" id="btn3" class="button">Kopieren</button></li>
+        <li><button class="btns" id="btn4" onclick="exportToCsv(bu)" class="button">Exportieren</button></li>
+      </ul>
+  </div>
+  <div>
+    <ul id="div2"></ul>
+  </div>
+<a name="bottom"></a>
 </body>
+<script src="main.js"></script>
+<script src="file.json"></script>
+<img id="btndwn" class="top-right arrow" onclick="location.href='#bottom';down()"width="50" height="50" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABv0lEQVRoQ+3YP0vEMBjH8e+BoC9NJ3ETQXFRF910dHLUTRd1EQVxEyd9aQqCkqMHMeZ/8oRwpNO116b9PL88bemMJVlmS+JgQHpLciQyEhGqwJhaQoXNHnYkkl06oQNHIkKFzR7WTGQFeALegJfsUWUP3AY2gV3ge3EqHbIKvAIbwA+w0yFGIZ5h/o74DmwBXwqjQ9YmyPqk7A2jI9QlfkyQTxOi1m2YfeBRdrYER98DHrTC/0HYID1igggXpCdMFMIH6QETjQhBXJgj4D44q8t2OABufT1hDh/zZLfdACQxyYiYRBZwE6O2HwokoxB3WrX/3Z1cQcck0gqTjUhJxIc5AW7KWoJj4DonCdsrSuy12KZZCaYYkZNI7WSqIEogtluz2paSTDVEKcSFOQOuAvP0FLgs6Ymc50iod2w948NUR9RIxNczNowIoiYkZpqJIWpDXJjzKbaLmj0h0SPmmLae0feJfu0INaf+f8orSsq4LowIQmJq6VgTI4aQhug9o36rLx7zDwUSi9TUMpNR62KIFolIFN86ZotEmmAGpEmZE04yEkkoVpNdRyJNypxwkpFIQrGa7DoSaVLmhJP8AosydjMRIKnxAAAAAElFTkSuQmCC">
+<img id="btnp" class="bottom-right arrow" onclick="location.href='#top';up()" width="50" height="50" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABmElEQVRoQ+3YMUsEMRCG4fdA0J+mldiJoNiojXZaWllqp43ayAliJ1b60xQEZSGRJeTcSXYmLsdcm2STZ75k98iMJfnNlsSBQ6aWpCfiiRhVwLeWUWGrH+uJVJfOaKAnUlDYtdD3o2BMcVfrRDrES1jVFmCGsYRExHqAvANmGCtIiohbxQxjAVmEMMVoQ3KI8yC46J1g9WQ0ITnEGXAVAKfApRVGCzKEiOs3w2hApAhTzFhIKcIMMwaSQ5wAN8LP8jFwrXVmaiFjEXH9apgaiBZCFVMK0UaoYUogOcQhcC88E0PdDoC72jMjhVgj4vqrMRJIivgGjhSTSJPqMLfwewsq+jszBGmN6CdThPkLkkPsA/Ohza7Uvgc8SJNZBPlvRKyFGJODTAVRhEkhU0OIMX1IDrEDPCvt+bGP2QaeFp2ZPmQ13HhsAN0rdkqIWIQ+5i1cZnx2jenWWgEegdcJJZEm2WE2gV3gKzYOfUfGbodm4x3SrNTCiTwRYaGadfNEmpVaOJEnIixUs26eSLNSCyfyRISFatbtB8kgdjONkVupAAAAAElFTkSuQmCC">
 </html>
