@@ -9,6 +9,8 @@ var lightequip_k = [1140, 1184, 1186, 1200, 1402, 1403, 1404, 1406, 3300, 3801, 
 var inp2 = '';
 var buNeu = [[]];
 var inp;
+var regelInput = [];
+var regelOutput = [];
 
 
 /*** Global Functions commonly used             ***/
@@ -138,6 +140,24 @@ function bd(){
         buch.appendChild(oo);
     }
 }
+function be(a) {  /* Loops through an array of Row Numbers */
+ var buch = document.getElementById("buch");
+ buch.innerHTML = "";
+  var ll = document.createElement("tr");
+  buch.appendChild(ll);
+  var bl = bu[0].length;
+  bd();
+  console.log("a="+a);
+  for ( var z in a ) {
+    ll = document.createElement("tr");
+    buch.appendChild(ll);
+    for ( var i = 0; i < bl; i++){
+      var op = document.createElement("td");
+      op.innerHTML = bu[a[z]][i].replace('""', ' ');
+      buch.appendChild(op);
+    }
+  }
+}
 function filter(){
   var kj = document.getElementById("div2");
   kj.innerHTML = "";
@@ -235,8 +255,14 @@ function soll(a = true){
 }
 function matchEntry(){
   document.getElementById("buch").style.display = 'block';
-  var a = prompt("Bitte geben Sie ein Suchwort ein:").split(",");
-  //var a = lightequip_k;
+  var a;
+  var ja = confirm("Vorgefertigte Regel verwenden?");
+  if ( ja ){
+    a = regelInput;
+  }
+  else if ( ja === false ) {
+    a = prompt("Bitte geben Sie ein Suchwort ein:").split(",");
+  }
   var b = [];
   var c = 0;
   for ( var i = 0; i < j; i++){  
@@ -267,8 +293,79 @@ function matchEntry(){
  
   console.log(b);
 }
+function createRule(){
+  var a = parseInt(prompt("Spalte:")-1);
+  var b = prompt("Spalte: " + (a+1) + " entspricht:");
+  var c = confirm("Weiter?");
+  return { spalte: a, regel: b , weiter: c };
+}
+function addRule(a, b, c){
+  var s = createRule();
+  b[a] = s.regel;
+  c[a] = s.spalte;
+  if ( s.weiter ) {
+    addRule(a+1, b, c);
+  }
+}
+function compareRule(a, b){
+  var next = false;
+  for ( var m = 0; m < j; m++){
+    for ( var u in a ) {
+      if ( (bu[m][a[u]] == b[u])){
+        next = true;
+      }
+      else if ( (bu[m][a[u]] != b[u]) ){
+        next = false;
+      }
+    }
+  }
+}
+function pattern(){
+  document.getElementById("buch").style.display = 'block';
+  var ruleset = [];
+  var columns = [];
+  var shown = [];
+  count = 0;
+  var next = confirm("Neue Regel hinzufügen?");
+  if ( next ){          // nur eine Ausführung soweit
+    addRule(0, ruleset, columns);
+  }
+  next = false;
+  console.log(ruleset, columns, columns.length);
+  for ( var m = 0; m < j; m++ ) {
+    for ( var u in columns){
+      if ( (bu[m][columns[u]] == ruleset[u]) ){
+        next = true;
+      }
+      else if ( (bu[m][columns[u]] != ruleset[u]) ){
+        next = false;
+      }
+      if ( next && ( u == columns.length - 1 )){
+        shown[count] = m;
+        count++;
+      }
+    }
+  }
+  console.log(shown);
+  for ( var y in shown){
+    be(shown);
+  }
+  return shown;
+}
 function ersetzen(){
-  var a = prompt("Bitte geben Sie den zu ersetzenden Begriff ein:").split(",");
+  var a;
+  var ja = confirm("Vorgefertigte Regel verwenden?");
+  if ( ja ){
+    if ( regelInput.length > 0){
+      a = regelInput;
+    }
+    else if (regelInput.length < 1){
+      chooseRule();
+    }
+  }
+  else if ( ja === false ) {
+    a = prompt("Bitte geben Sie den zu ersetzenden Begriff ein:").split(",");
+  }
   if ( a === null ){
     return 0;
   }
@@ -300,11 +397,22 @@ function ersetzen(){
   console.log('Treffer gefunden in folgenden Spalten: ' + d);
   for ( var r = 0; r < d.length; r++) { d[r]+=1; }
   var nVal = confirm("Auszuwaehlende Spalten:" + d);
-  var nEntry = prompt("Neuer zuzuweisender Wert: ").split(",");
-  if (nEntry.length < a.length){
+  var nEntry;
+  if ( ja ){ 
+    if (regelOutput.length > 0){
+     nEntry = regelOutput; 
+    }
+    else if (regelOutput.length < 1){
+      chooseRule();
+    }
+  }
+  else if ( ja === false){
+    nEntry = prompt("Neuer zuzuweisender Wert: ").split(",");
+  }
+  if ((ja === false) && (nEntry.length < a.length)){
     nEntry = prompt("Zu wenige Ersatzwerte! Neu eingeben:").split(",");
   }
-  else if ( nEntry.length > a.length){
+  else if ((ja === false)&& (nEntry.length > a.length)){
     nEntry = prompt("Zu viele Ersatzwerte! Neu eingeben: ").split(",");
   }
   for (var s = 0; s < a.length; s++){
@@ -381,3 +489,54 @@ function rw(ar) {
     searchWhiteSpaces(ar, i);
   }
 }
+
+
+function chooseRule(aa = null){
+  var myData = JSON.parse(data);
+  var c1 = 0;
+  var c2 = 0;
+  for ( var prop in myData[0] ) {
+    if ( myData[0].hasOwnProperty(prop)){
+      c1++;
+    }
+  }
+  
+  console.log("Laenge: " + c1);
+  var treffer1 = [];
+  var treffer2 = [];
+  if ( aa === null){
+    var a = prompt("Input");
+    for ( var x in myData[0]){
+      c2++;
+      console.log(c2);
+      if ( x == a ){
+        treffer1 = eval("myData[0]." + x);
+        console.log("Input: " + treffer1);
+        regelInput = treffer1;
+      }
+    }
+      if (treffer1.length < 1) {
+        chooseRule();
+        }
+  }
+  else {
+    regelInput = aa;
+  }
+    c2 = 0;
+    var b = prompt("Output");
+    for ( var y in myData[0]){
+      c2++;
+      console.log(c2);
+      if ( y == b){
+        treffer2 = eval("myData[0]." + y);
+        console.log("Output: " + treffer2);
+        regelOutput = treffer2;
+      }
+    }
+    if (treffer2.length < 1) {
+     chooseRule(treffer1);
+    }
+    console.log(treffer1.length, treffer2.length, c2, c1);
+}
+
+/****************** EXPERIMENTALS ******************/

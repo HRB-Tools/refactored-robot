@@ -8,9 +8,11 @@
 
 <div id="sidebar" class="sidebar bar-block border-right">
       <button id="closebtn" onclick="hide('sidebar')" class="bar-item large">Close &times;</button>
-      <a id="einlesen" onmousedown="read();hide('sidebar')" class="bar-item button">CSV Datei einlesen</a>
-      <a id="anz" onmousedown="bc();hide('sidebar')" class="bar-item button">Buchung anzeigen</a>
-      <a id="fil" onmousedown="filter();hide('sidebar')" class="bar-item button">Filter</a>
+      <a id="einlesen" onmousedown="read();hide('sidebar');hide('tablepng')" class="bar-item button">CSV Datei einlesen</a>
+      <a id="anz" onmousedown="bc();hide('sidebar');hide('tablepng')" class="bar-item button">Buchung anzeigen</a>
+      <a id="fil" onmousedown="filter();hide('sidebar');hide('tablepng')" class="bar-item button">Filter</a>
+      <a id="rule" onmousedown="chooseRule();hide('sidebar');hide('tablepng')" class="bar-item button">Regeln ausw&aumlhlen</a>
+      <a id="ruleset" onmousedown="pattern();hide('sidebar');hide('tablepng')" class="bar-item button">Eigenes Muster ausw&aumlhlen</a>
       <a href="readme.html" class="bar-item button">Volle Dokumentation</a>
       <a href="translation_tables.html" class="bar-item button">Translation Tables</a>
 </div>
@@ -22,11 +24,15 @@
   <a name="top"></a>
   <div id="top-bar">
   <button id="plus" class="button xlarge" onmouseover="show('sidebar')">&equiv;</button>
+  <p1>Korrekturprogramm</p1>
   </div>
   <div id="cont" class="container"> 
   </div>
-    <div id="div1"><table id="buch"></table></div>
-    <div class="fixed"><a href="#top">&Lambda;</a></div>
+  <div id="div1"><table id="buch"></table></div>
+  <div class="fixed"><a href="#top">&Lambda;</a></div>
+  <div>
+  <h2>Ausgabe als Tabelle</h2>
+  <img id="tablepng" src="screenshot-table.png" style="width:384px;height:192px"></img>
   </div>
   <div id="ausgabe">
       <ul>
@@ -42,6 +48,7 @@
 <a name="bottom"></a>
 </body>
 <script src="main.js"></script>
+<script src="file.json"></script>
 <img id="btndwn" class="top-right arrow" onclick="location.href='#bottom';down()"width="50" height="50" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABv0lEQVRoQ+3YP0vEMBjH8e+BoC9NJ3ETQXFRF910dHLUTRd1EQVxEyd9aQqCkqMHMeZ/8oRwpNO116b9PL88bemMJVlmS+JgQHpLciQyEhGqwJhaQoXNHnYkkl06oQNHIkKFzR7WTGQFeALegJfsUWUP3AY2gV3ge3EqHbIKvAIbwA+w0yFGIZ5h/o74DmwBXwqjQ9YmyPqk7A2jI9QlfkyQTxOi1m2YfeBRdrYER98DHrTC/0HYID1igggXpCdMFMIH6QETjQhBXJgj4D44q8t2OABufT1hDh/zZLfdACQxyYiYRBZwE6O2HwokoxB3WrX/3Z1cQcck0gqTjUhJxIc5AW7KWoJj4DonCdsrSuy12KZZCaYYkZNI7WSqIEogtluz2paSTDVEKcSFOQOuAvP0FLgs6Ymc50iod2w948NUR9RIxNczNowIoiYkZpqJIWpDXJjzKbaLmj0h0SPmmLae0feJfu0INaf+f8orSsq4LowIQmJq6VgTI4aQhug9o36rLx7zDwUSi9TUMpNR62KIFolIFN86ZotEmmAGpEmZE04yEkkoVpNdRyJNypxwkpFIQrGa7DoSaVLmhJP8AosydjMRIKnxAAAAAElFTkSuQmCC">
 <img id="btnp" class="bottom-right arrow" onclick="location.href='#top';up()" width="50" height="50" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABmElEQVRoQ+3YMUsEMRCG4fdA0J+mldiJoNiojXZaWllqp43ayAliJ1b60xQEZSGRJeTcSXYmLsdcm2STZ75k98iMJfnNlsSBQ6aWpCfiiRhVwLeWUWGrH+uJVJfOaKAnUlDYtdD3o2BMcVfrRDrES1jVFmCGsYRExHqAvANmGCtIiohbxQxjAVmEMMVoQ3KI8yC46J1g9WQ0ITnEGXAVAKfApRVGCzKEiOs3w2hApAhTzFhIKcIMMwaSQ5wAN8LP8jFwrXVmaiFjEXH9apgaiBZCFVMK0UaoYUogOcQhcC88E0PdDoC72jMjhVgj4vqrMRJIivgGjhSTSJPqMLfwewsq+jszBGmN6CdThPkLkkPsA/Ohza7Uvgc8SJNZBPlvRKyFGJODTAVRhEkhU0OIMX1IDrEDPCvt+bGP2QaeFp2ZPmQ13HhsAN0rdkqIWIQ+5i1cZnx2jenWWgEegdcJJZEm2WE2gV3gKzYOfUfGbodm4x3SrNTCiTwRYaGadfNEmpVaOJEnIixUs26eSLNSCyfyRISFatbtB8kgdjONkVupAAAAAElFTkSuQmCC">
 </html>
