@@ -140,6 +140,7 @@ function bd(){
         buch.appendChild(oo);
     }
 }
+
 function be(a) {  /* Loops through an array of Row Numbers */
  var buch = document.getElementById("buch");
  buch.innerHTML = "";
@@ -158,6 +159,7 @@ function be(a) {  /* Loops through an array of Row Numbers */
     }
   }
 }
+
 function filter(){
   var kj = document.getElementById("div2");
   kj.innerHTML = "";
@@ -293,6 +295,7 @@ function matchEntry(){
  
   console.log(b);
 }
+
 function createRule(){
   var a = parseInt(prompt("Spalte:")-1);
   var b = prompt("Spalte: " + (a+1) + " entspricht:");
@@ -352,16 +355,20 @@ function pattern(){
   }
   return shown;
 }
+
+
 function ersetzen(){
   var a;
   var ja = confirm("Vorgefertigte Regel verwenden?");
   if ( ja ){
+
     if ( regelInput.length > 0){
       a = regelInput;
     }
     else if (regelInput.length < 1){
       chooseRule();
     }
+    a = regelInput;
   }
   else if ( ja === false ) {
     a = prompt("Bitte geben Sie den zu ersetzenden Begriff ein:").split(",");
@@ -405,6 +412,8 @@ function ersetzen(){
     else if (regelOutput.length < 1){
       chooseRule();
     }
+=======
+    nEntry = regelOutput;
   }
   else if ( ja === false){
     nEntry = prompt("Neuer zuzuweisender Wert: ").split(",");
@@ -491,6 +500,7 @@ function rw(ar) {
 }
 
 
+
 function chooseRule(aa = null){
   var myData = JSON.parse(data);
   var c1 = 0;
@@ -509,6 +519,13 @@ function chooseRule(aa = null){
     for ( var x in myData[0]){
       c2++;
       console.log(c2);
+      
+function chooseRule(){
+  var myData = JSON.parse(data);
+  var treffer1 = [];
+  var treffer2 = [];
+    var a = prompt("Input");
+    for ( var x in myData[0]){
       if ( x == a ){
         treffer1 = eval("myData[0]." + x);
         console.log("Input: " + treffer1);
@@ -527,6 +544,13 @@ function chooseRule(aa = null){
     for ( var y in myData[0]){
       c2++;
       console.log(c2);
+      else if (treffer1.length < 1){
+        a = prompt("Liste nicht gefunden, bitte neu waehlen");
+      }
+    }
+    
+    var b = prompt("Output");
+    for ( var y in myData[0]){
       if ( y == b){
         treffer2 = eval("myData[0]." + y);
         console.log("Output: " + treffer2);
@@ -537,6 +561,10 @@ function chooseRule(aa = null){
      chooseRule(treffer1);
     }
     console.log(treffer1.length, treffer2.length, c2, c1);
+      else if (treffer2.length < 1){
+        b = prompt("Liste nicht gefunden, bitte neu waehlen");
+      }
+    }
 }
 
 /****************** EXPERIMENTALS ******************/
