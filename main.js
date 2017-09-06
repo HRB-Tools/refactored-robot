@@ -140,6 +140,26 @@ function bd(){
         buch.appendChild(oo);
     }
 }
+
+function be(a) {  /* Loops through an array of Row Numbers */
+ var buch = document.getElementById("buch");
+ buch.innerHTML = "";
+  var ll = document.createElement("tr");
+  buch.appendChild(ll);
+  var bl = bu[0].length;
+  bd();
+  console.log("a="+a);
+  for ( var z in a ) {
+    ll = document.createElement("tr");
+    buch.appendChild(ll);
+    for ( var i = 0; i < bl; i++){
+      var op = document.createElement("td");
+      op.innerHTML = bu[a[z]][i].replace('""', ' ');
+      buch.appendChild(op);
+    }
+  }
+}
+
 function filter(){
   var kj = document.getElementById("div2");
   kj.innerHTML = "";
@@ -275,10 +295,79 @@ function matchEntry(){
  
   console.log(b);
 }
+
+function createRule(){
+  var a = parseInt(prompt("Spalte:")-1);
+  var b = prompt("Spalte: " + (a+1) + " entspricht:");
+  var c = confirm("Weiter?");
+  return { spalte: a, regel: b , weiter: c };
+}
+function addRule(a, b, c){
+  var s = createRule();
+  b[a] = s.regel;
+  c[a] = s.spalte;
+  if ( s.weiter ) {
+    addRule(a+1, b, c);
+  }
+}
+function compareRule(a, b){
+  var next = false;
+  for ( var m = 0; m < j; m++){
+    for ( var u in a ) {
+      if ( (bu[m][a[u]] == b[u])){
+        next = true;
+      }
+      else if ( (bu[m][a[u]] != b[u]) ){
+        next = false;
+      }
+    }
+  }
+}
+function pattern(){
+  document.getElementById("buch").style.display = 'block';
+  var ruleset = [];
+  var columns = [];
+  var shown = [];
+  count = 0;
+  var next = confirm("Neue Regel hinzufügen?");
+  if ( next ){          // nur eine Ausführung soweit
+    addRule(0, ruleset, columns);
+  }
+  next = false;
+  console.log(ruleset, columns, columns.length);
+  for ( var m = 0; m < j; m++ ) {
+    for ( var u in columns){
+      if ( (bu[m][columns[u]] == ruleset[u]) ){
+        next = true;
+      }
+      else if ( (bu[m][columns[u]] != ruleset[u]) ){
+        next = false;
+      }
+      if ( next && ( u == columns.length - 1 )){
+        shown[count] = m;
+        count++;
+      }
+    }
+  }
+  console.log(shown);
+  for ( var y in shown){
+    be(shown);
+  }
+  return shown;
+}
+
+
 function ersetzen(){
   var a;
   var ja = confirm("Vorgefertigte Regel verwenden?");
   if ( ja ){
+
+    if ( regelInput.length > 0){
+      a = regelInput;
+    }
+    else if (regelInput.length < 1){
+      chooseRule();
+    }
     a = regelInput;
   }
   else if ( ja === false ) {
@@ -317,6 +406,13 @@ function ersetzen(){
   var nVal = confirm("Auszuwaehlende Spalten:" + d);
   var nEntry;
   if ( ja ){ 
+    if (regelOutput.length > 0){
+     nEntry = regelOutput; 
+    }
+    else if (regelOutput.length < 1){
+      chooseRule();
+    }
+=======
     nEntry = regelOutput;
   }
   else if ( ja === false){
@@ -404,6 +500,26 @@ function rw(ar) {
 }
 
 
+
+function chooseRule(aa = null){
+  var myData = JSON.parse(data);
+  var c1 = 0;
+  var c2 = 0;
+  for ( var prop in myData[0] ) {
+    if ( myData[0].hasOwnProperty(prop)){
+      c1++;
+    }
+  }
+  
+  console.log("Laenge: " + c1);
+  var treffer1 = [];
+  var treffer2 = [];
+  if ( aa === null){
+    var a = prompt("Input");
+    for ( var x in myData[0]){
+      c2++;
+      console.log(c2);
+      
 function chooseRule(){
   var myData = JSON.parse(data);
   var treffer1 = [];
@@ -415,6 +531,19 @@ function chooseRule(){
         console.log("Input: " + treffer1);
         regelInput = treffer1;
       }
+    }
+      if (treffer1.length < 1) {
+        chooseRule();
+        }
+  }
+  else {
+    regelInput = aa;
+  }
+    c2 = 0;
+    var b = prompt("Output");
+    for ( var y in myData[0]){
+      c2++;
+      console.log(c2);
       else if (treffer1.length < 1){
         a = prompt("Liste nicht gefunden, bitte neu waehlen");
       }
@@ -427,6 +556,11 @@ function chooseRule(){
         console.log("Output: " + treffer2);
         regelOutput = treffer2;
       }
+    }
+    if (treffer2.length < 1) {
+     chooseRule(treffer1);
+    }
+    console.log(treffer1.length, treffer2.length, c2, c1);
       else if (treffer2.length < 1){
         b = prompt("Liste nicht gefunden, bitte neu waehlen");
       }
