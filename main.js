@@ -13,14 +13,13 @@ var regelInput = [];
 var regelOutput = [];
 
 
-/*** Global Functions commonly used             ***/
+/**********   Global Functions commonly used      ***********/
 function down(){
   document.getElementById("btndwn").style.display = "none";
   if ( window.scrollY > screen.availHeight ) {
     document.getElementById("btnp").style.display = "block";
   }
 }
-
 function up(){
   document.getElementById("btnp").style.display = "none";
   if ( document.getElementById("buch").offsetHeight > (screen.availHeight)*2 ) {
@@ -55,7 +54,7 @@ function read(a = 'empty') {
   var bu00 = bu[0][0];
   for (var k = 0; k < bu00.length; k++){
     if (bu00.indexOf(" ")>=0){
-      bu[0][0] = bu00.substr(bu00.lastIndexOf(" ")+1, bu00.length); 
+      bu[0][0] = bu00.substr(bu00.lastIndexOf(" ")+1, bu00.length);
     }
   }
   document.getElementById("btn1").style.display = "inherit";
@@ -108,6 +107,8 @@ function sh(a) {
   }
 }
 /**************************************************/
+
+/**********    Darstellende Funktionen   **********/
 function bb(a, b, c) {
  var buch = document.getElementById("buch");
  buch.innerHTML = "";
@@ -130,8 +131,11 @@ function bc(){
   document.getElementById('buch').style.display = 'block' ;
   var a = parseInt(prompt("Bitte geben Sie die Nummer der ersten gesuchten Buchung an", 1));
   var c = parseInt(prompt("Bitte geben Sie die Anzahl der Buchungen an", j));
+  var d = new Date();
   bb(a, "td", c);
   checkHeight();
+  var e = new Date();
+  console.log("Laufzeit: " + (e-d) + " Millisekunden");
 }
 function bd(){
   for ( var m = 0; m < entries.length; m++){
@@ -140,7 +144,6 @@ function bd(){
         buch.appendChild(oo);
     }
 }
-
 function be(a) {  /* Loops through an array of Row Numbers */
  var buch = document.getElementById("buch");
  buch.innerHTML = "";
@@ -159,7 +162,9 @@ function be(a) {  /* Loops through an array of Row Numbers */
     }
   }
 }
+/**************************************************/
 
+/************    Filterfunktionen    **************/
 function filter(){
   var kj = document.getElementById("div2");
   kj.innerHTML = "";
@@ -245,15 +250,15 @@ function soll(a = true){
         buch.appendChild(oo);
       }
     }
-    buch.appendChild(ll);                                         //hierhin setzen
+    buch.appendChild(ll);
     for (var i = 0; i < bu[0].length; i++){
       var op = document.createElement("td");
-      if ( (bu[l][1] == '"S"') === a){                            //if-Abfrage am besten
+      if ( (bu[l][1] == '"S"') === a){
         op.innerHTML = bu[l][i].replace('""', ' ');
         buch.appendChild(op);
       }
     }
-  }
+    }
 }
 function matchEntry(){
   document.getElementById("buch").style.display = 'block';
@@ -267,7 +272,7 @@ function matchEntry(){
   }
   var b = [];
   var c = 0;
-  for ( var i = 0; i < j; i++){  
+  for ( var i = 0; i < j; i++){
     for (var k = 0; k < bu[i].length; k++){
       for (var m = 0; m < a.length; m++){
         if ( bu[i][k] == a[m]){
@@ -292,10 +297,9 @@ function matchEntry(){
       buch.appendChild(op);
       }
   }
- 
+
   console.log(b);
 }
-
 function createRule(){
   var a = parseInt(prompt("Spalte:")-1);
   var b = prompt("Spalte: " + (a+1) + " entspricht:");
@@ -355,20 +359,16 @@ function pattern(){
   }
   return shown;
 }
-
-
 function ersetzen(){
   var a;
   var ja = confirm("Vorgefertigte Regel verwenden?");
   if ( ja ){
-
     if ( regelInput.length > 0){
       a = regelInput;
     }
     else if (regelInput.length < 1){
       chooseRule();
     }
-    a = regelInput;
   }
   else if ( ja === false ) {
     a = prompt("Bitte geben Sie den zu ersetzenden Begriff ein:").split(",");
@@ -389,7 +389,7 @@ function ersetzen(){
         if ( bu[i][k] == a[m]){
           cont[c] = i;
           if ( m == a.length - 1){
-            b[m] = cont; 
+            b[m] = cont;
           }
           if ( d.indexOf(k) < 0 ) {
             d[e]=k;
@@ -400,20 +400,17 @@ function ersetzen(){
       }
     }
   }
-  //console.log(a, b, c);
   console.log('Treffer gefunden in folgenden Spalten: ' + d);
   for ( var r = 0; r < d.length; r++) { d[r]+=1; }
   var nVal = confirm("Auszuwaehlende Spalten:" + d);
   var nEntry;
-  if ( ja ){ 
+  if ( ja ){
     if (regelOutput.length > 0){
-     nEntry = regelOutput; 
+     nEntry = regelOutput;
     }
     else if (regelOutput.length < 1){
       chooseRule();
     }
-=======
-    nEntry = regelOutput;
   }
   else if ( ja === false){
     nEntry = prompt("Neuer zuzuweisender Wert: ").split(",");
@@ -437,7 +434,9 @@ function ersetzen(){
   exportToCsv(bu);
   bc();
 }
+/***************************************************/
 
+/************  Funktion zum Export   ***************/
 function exportToCsv(rows) {
         var und = '_';
         var el0 = el[0].replace('"', '');
@@ -487,20 +486,9 @@ function exportToCsv(rows) {
             }
       }
 }
-function searchWhiteSpaces(a, i){
-  if ( a[i].indexOf(" ") >= 0 ) {
-    a[i]=a[i].slice(a[i].indexOf(" ")+1, a[i].length+1);
-    searchWhiteSpaces(a, i);
-  }
-}
-function rw(ar) {
-  for ( var i = 0; i < ar.length - 1; i++) {
-    searchWhiteSpaces(ar, i);
-  }
-}
+/***************************************************/
 
-
-
+/***********     Eigene Regeln     *****************/
 function chooseRule(aa = null){
   var myData = JSON.parse(data);
   var c1 = 0;
@@ -510,7 +498,7 @@ function chooseRule(aa = null){
       c1++;
     }
   }
-  
+
   console.log("Laenge: " + c1);
   var treffer1 = [];
   var treffer2 = [];
@@ -519,13 +507,6 @@ function chooseRule(aa = null){
     for ( var x in myData[0]){
       c2++;
       console.log(c2);
-      
-function chooseRule(){
-  var myData = JSON.parse(data);
-  var treffer1 = [];
-  var treffer2 = [];
-    var a = prompt("Input");
-    for ( var x in myData[0]){
       if ( x == a ){
         treffer1 = eval("myData[0]." + x);
         console.log("Input: " + treffer1);
@@ -544,13 +525,6 @@ function chooseRule(){
     for ( var y in myData[0]){
       c2++;
       console.log(c2);
-      else if (treffer1.length < 1){
-        a = prompt("Liste nicht gefunden, bitte neu waehlen");
-      }
-    }
-    
-    var b = prompt("Output");
-    for ( var y in myData[0]){
       if ( y == b){
         treffer2 = eval("myData[0]." + y);
         console.log("Output: " + treffer2);
@@ -561,10 +535,28 @@ function chooseRule(){
      chooseRule(treffer1);
     }
     console.log(treffer1.length, treffer2.length, c2, c1);
-      else if (treffer2.length < 1){
-        b = prompt("Liste nicht gefunden, bitte neu waehlen");
-      }
-    }
 }
+/***************************************************/
 
 /****************** EXPERIMENTALS ******************/
+function tm(){
+  var k = new Date();
+  var tmcontent = document.getElementById("tablenew");
+  tmcontent.innerHTML='<table>' + tableHTML() + '</table>';
+  var l = new Date();
+  console.log("Laufzeit: " + (l-k) + " Millisekunden!");
+}
+
+function tableHTML(){
+  var a = '';
+  for ( var i = 0; i < bu.length; i++){
+    a += '<tr>';
+    for ( var j = 0; j < bu[i].length; j++) {
+      var b = bu[i];
+      a+= '<td>' + b[j] + '</td>';
+    }
+  }
+  a += '</tr>';
+  return a;
+}
+/***************************************************/

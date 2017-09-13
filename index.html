@@ -8,14 +8,13 @@
 
 <div id="sidebar" class="sidebar bar-block border-right">
       <button id="closebtn" onclick="hide('sidebar')" class="bar-item large">Close &times;</button>
- exportcsv
       <a id="einlesen" onmousedown="read();hide('sidebar');hide('tablepng')" class="bar-item button">CSV Datei einlesen</a>
       <a id="anz" onmousedown="bc();hide('sidebar');hide('tablepng')" class="bar-item button">Buchung anzeigen</a>
+      <a id="anz2" onmousedown="tm();hide('sidebar');hide('tablepng')" class="bar-item button">Buchung anzeigen (f&uumlr gr&oumlssere Buchungen)</a>
       <a id="fil" onmousedown="filter();hide('sidebar');hide('tablepng')" class="bar-item button">Filter</a>
       <a id="rule" onmousedown="chooseRule();hide('sidebar');hide('tablepng')" class="bar-item button">Regeln ausw&aumlhlen</a>
       <a id="ruleset" onmousedown="pattern();hide('sidebar');hide('tablepng')" class="bar-item button">Eigenes Muster ausw&aumlhlen</a>
       <a href="readme.html" class="bar-item button">Volle Dokumentation</a>
-      <a href="translation_tables.html" class="bar-item button">Translation Tables</a>
 </div>
 
 
@@ -25,7 +24,6 @@
   <a name="top"></a>
   <div id="top-bar">
   <button id="plus" class="button xlarge" onmouseover="show('sidebar')">&equiv;</button>
-
   <p1>Korrekturprogramm</p1>
   </div>
   <div id="cont" class="container"> 
@@ -35,8 +33,8 @@
   <div>
   <h2>Ausgabe als Tabelle</h2>
   <img id="tablepng" src="screenshot-table.png" style="width:384px;height:192px"></img>
-
   </div>
+  <div id="tablenew"></div>
   <div id="ausgabe">
       <ul>
         <li><button class="btns" id="btn1" onclick="output(bu)" class="button">Ausgeben</button></li>

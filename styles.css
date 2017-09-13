@@ -7,6 +7,7 @@
 #div1 { width: 100%;overflow:auto; }
 #cont { width: 100%; }
 #buch {float: left;display: none;border-collapse: collapse;border: 2px;border-color: #d3d3d3;color: #4f4a42;}
+#tablenew {with: 100%;overflow:auto;}
 
 a.bar-item:hover{ background-color: #222272!important }
 .button:disabled{cursor:not-allowed;opacity:0.3}
